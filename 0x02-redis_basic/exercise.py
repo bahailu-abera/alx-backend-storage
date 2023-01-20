@@ -4,7 +4,7 @@ Module Writting to redis
 """
 import redis
 from uuid import uuid4
-from typing import Union
+from typing import Union, Callable, Optional
 
 
 class Cache:
@@ -23,3 +23,31 @@ class Cache:
         self._redis.set(randomkey, data)
 
         return randomkey
+
+    def get(self, key: str,
+            fn: Optional[Callable] = None) -> Union[bytes, float, int, str]:
+        """
+        Convert the data to the desired format
+        """
+        value = self._redis.get(key)
+        if fn is None or value is None:
+            return value
+        return fn(value)
+
+    def get_str(self, key: str) -> str:
+        """
+        Get a string from the cache
+        """
+        value = self._redis.get(key)
+        return value.decode('utf-8')
+
+    def get_int(self, key: str) -> int:
+        """
+        Get an int from the cache
+        """
+        value = self._redis.get(key)
+        try:
+            value = int(value.decode('utf-8'))
+        except Exception:
+            value = 0
+        return value
