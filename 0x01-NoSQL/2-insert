@@ -1,6 +1,2 @@
 // insert a data in a document
-data = {
-     "name": "Holberton school"
-     }
-
-db.school.insertOne(data)
+db.school.insertOne({ name: 'Holberton school' });
