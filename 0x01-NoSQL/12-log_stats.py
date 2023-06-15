@@ -28,14 +28,14 @@ def get_path_count(mongo_collection, method, path):
 
 if __name__ == "__main__":
     client = MongoClient('mongodb://127.0.0.1:27017')
-    nginx_ctn = client.logs.nginx
+    nginx = client.logs.nginx
 
-    print(get_logs_count(nginx_ctn))
+    print("{} logs".format(get_logs_count(nginx)))
     print("Methods:")
 
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for method in methods:
-        print("\t{}: {}".format(method, get_method_count(nginx_cnt, method)))
+        print("\t{}: {}".format(method, get_method_count(nginx, method)))
 
-    print("{} status check".format(get_path_count(nginx_cnt,
+    print("{} status check".format(get_path_count(nginx,
                                                   "GET", "/status")))
