@@ -35,7 +35,7 @@ if __name__ == "__main__":
 
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     for method in methods:
-        print("\t{}: {}".format(method, get_method_count(nginx, method)))
+        print("\tmethod {}: {}".format(method, get_method_count(nginx, method)))
 
     print("{} status check".format(get_path_count(nginx,
                                                   "GET", "/status")))
