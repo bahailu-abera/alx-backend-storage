@@ -15,15 +15,15 @@ def replay(cache_method: Callable) -> None:
     input_key = cache_method.__qualname__ + ':inputs'
     output_key = cache_method.__qualname__ + ':outputs'
 
-    print(cache_method.__qualname__ + ' was called {} times:\n'.format(
-        cache_method.__self__._redis.get(cache_method.__qualname__)))
+    print(cache_method.__qualname__ + ' was called {} times'.format(
+        cache_method.__self__._redis.get(cache_method.__qualname__).decode()))
 
     inputs_lst = cache_method.__self__._redis.lrange(input_key, 0, -1)
     outputs_lst = cache_method.__self__._redis.lrange(output_key, 0, -1)
 
     for inp, out in zip(inputs_lst, outputs_lst):
-        print("{}(*{}) -> {}\n".format(
-            cache_method.__qualname__, eval(inp.decode()), out.decode()))
+        print("{}(*{})".format(
+            cache_method.__qualname__, eval(inp.decode())))
 
 
 def call_history(method: Callable) -> Callable:
