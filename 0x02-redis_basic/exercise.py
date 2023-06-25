@@ -15,7 +15,7 @@ def replay(cache_method: Callable) -> None:
     input_key = cache_method.__qualname__ + ':inputs'
     output_key = cache_method.__qualname__ + ':outputs'
 
-    print(cache_method.__qualname__ + ' was called {} times'.format(
+    print(cache_method.__qualname__ + ' was called {} times:'.format(
         cache_method.__self__._redis.get(cache_method.__qualname__).decode()))
 
     inputs_lst = cache_method.__self__._redis.lrange(input_key, 0, -1)
