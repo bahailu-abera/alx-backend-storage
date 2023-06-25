@@ -8,16 +8,16 @@ from typing import Union, Callable, Optional
 from uuid import uuid4
 
 
-def count_calls(func: Callable) -> Callable:
+def count_calls(method: Callable) -> Callable:
     """
     Decorator that takes a single method and returns a Callable
     """
-    @wraps(func)
+    @wraps(method)
     def wrapper(self, *args, **kwargs):
-        key = func.__qualname__
+        key = method.__qualname__
         self._redis.incr(key)
 
-        return func(self, *args, **kwargs)
+        return method(self, *args, **kwargs)
 
     return wrapper
 
