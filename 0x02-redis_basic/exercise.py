@@ -8,7 +8,28 @@ from typing import Union, Callable, Optional
 from uuid import uuid4
 
 
+def call_history(method: Callable) -> Callable:
+    """
+    Decorator that stores the history of inputs and outputs of a function
+    """
+    @wraps(method)
+    def wrapper(self, *args, **kwargs):
+        input_key = method.__qualname__ + ':inputs'
+
+        self._redis.rpush(input_key, str(args))
+
+        output = method(self, *args, **kwargs)
+
+        output_key = method.__qualname__ + ':outputs'
+        self._redis.rpush(output_key, str(output))
+
+        return output
+
+    return wrapper
+
+
 def count_calls(method: Callable) -> Callable:
+
     """
     Decorator that takes a single method and returns a Callable
     """
@@ -31,6 +52,7 @@ class Cache:
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         Stores the input data in a redis with a random key
