@@ -113,9 +113,3 @@ class Cache:
             value = 0
 
         return value
-
-
-def replay(self, method: Callable) -> None:
-    """
-    Displays the history of calls of a particular function
-    """
