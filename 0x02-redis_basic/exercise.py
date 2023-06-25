@@ -37,7 +37,7 @@ class Cache:
 
         return fn(value)
 
-    def get_str(key: str) -> str:
+    def get_str(self, key: str) -> str:
         """
         Get a string from the Cache
         """
@@ -45,7 +45,7 @@ class Cache:
 
         return value.decode('utf-8')
 
-    def get_int(key: str) -> int:
+    def get_int(self, key: str) -> int:
         """
         Get an integer from the Cache
         """
@@ -53,7 +53,7 @@ class Cache:
         try:
             value = int(value.decode('utf-8'))
 
-        except ValueError, TypeError:
+        except ValueError:
             value = 0
 
         return value
