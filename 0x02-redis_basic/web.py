@@ -12,6 +12,9 @@ _redis = redis.Redis()
 
 
 def count_requests(method: Callable) -> Callable:
+    """
+    Counts the request for a specific get request
+    """
     @wraps(method)
     def wrapper(url):
         """ Wrapper """
@@ -29,6 +32,7 @@ def count_requests(method: Callable) -> Callable:
     return wrapper
 
 
+@count_requests
 def get_page(url: str) -> str:
     """
     Obtain the HTML content of a particular URL and returns it
