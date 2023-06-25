@@ -8,6 +8,9 @@ from uuid import uuid4
 
 
 class Cache:
+    """
+    Redis Client Object
+    """
     def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
